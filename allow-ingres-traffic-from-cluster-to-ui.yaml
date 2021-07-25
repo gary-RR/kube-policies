@@ -1,0 +1,13 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingres-traffic-from-cluster-to-ui
+  namespace: products-prod
+spec:
+  podSelector:
+    matchLabels:
+      app: products-ui
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 192.168.0.0/16

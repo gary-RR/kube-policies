@@ -1,0 +1,22 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-stage-business-tier-access-to-db
+  namespace: products-prod
+spec:
+  podSelector:
+    matchLabels:
+      app: products-db
+  ingress:
+    #Allows connections from Pods with the label "app=products-business" in the current name space or 
+    # any namespaces with the label "porducts-prod-db-access: allow"
+  - from:
+    - podSelector:
+        matchLabels:
+          app: products-business
+      namespaceSelector:
+        matchLabels:
+          porducts-prod-db-access: allow     
+    ports:
+      - protocol: TCP
+        port: 8080

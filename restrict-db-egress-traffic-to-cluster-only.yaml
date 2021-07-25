@@ -1,0 +1,14 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: restrict-db-egress-traffic-to-cluster-only
+  namespace: products-prod
+spec:
+  podSelector:
+    matchLabels:
+      app: products-db
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 192.168.0.0/16
+    
